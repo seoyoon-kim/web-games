@@ -1,5 +1,6 @@
 const icons = ['🍒', '🍋', '🍊', '🍉', '⭐', '❤️'];
 let coins = 100;
+let points = 0;
 const spinCost = 10;
 const winReward = 50;
 
@@ -9,6 +10,7 @@ const reelEls = [
   document.getElementById('reel3')
 ];
 const coinsEl = document.getElementById('coins');
+const pointsEl = document.getElementById('points');
 const resultEl = document.getElementById('result');
 const spinBtn = document.getElementById('spin');
 
@@ -21,6 +23,8 @@ function spin() {
   coinsEl.textContent = coins;
   resultEl.textContent = '';
   spinBtn.disabled = true;
+  points += 1;
+  pointsEl.textContent = points;
 
   let results = [];
   let spins = [
