@@ -4,7 +4,7 @@ const ctx = canvas.getContext('2d');
 const GRAVITY = 0.5;
 const FLAP = -8;
 const PIPE_WIDTH = 50;
-const PIPE_GAP = 120;
+const PIPE_GAP = 160; // 기존 120에서 160으로 넓힘
 
 let bird = { x: 60, y: 200, width: 32, height: 32, velocity: 0 };
 let pipes = [];
@@ -18,6 +18,12 @@ function reset() {
   pipes = [];
   score = 0;
   gameOver = false;
+  // 첫 관문은 무조건 충분히 넓게 생성
+  pipes.push({
+    x: canvas.width,
+    top: 100,
+    bottom: 100 + PIPE_GAP
+  });
 }
 
 function spawnPipe() {
