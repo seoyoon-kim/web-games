@@ -15,17 +15,19 @@ document.addEventListener('DOMContentLoaded', function() {
   const resultEl = document.getElementById('result');
   const spinBtn = document.getElementById('spin');
 
+  let readyForPoint = true; // 결과가 나온 후에만 포인트 증가
+
   function spin() {
+    if (!readyForPoint) return; // 릴이 도는 중에는 클릭 무시
     if (coins < spinCost) {
       resultEl.textContent = 'Not enough coins!';
       return;
     }
+    readyForPoint = false; // 릴 도는 중에는 포인트 증가 금지
     coins -= spinCost;
     coinsEl.textContent = coins;
     resultEl.textContent = '';
     spinBtn.disabled = true;
-    points += 1;
-    pointsEl.textContent = points;
 
     let spins = [
       Math.floor(Math.random() * icons.length),
@@ -56,9 +58,16 @@ document.addEventListener('DOMContentLoaded', function() {
           resultEl.textContent = 'Try again!';
         }
         spinBtn.disabled = false;
+        readyForPoint = true;
       }
     }, 80);
   }
 
-  spinBtn.addEventListener('click', spin);
+  spinBtn.addEventListener('click', function() {
+    if (readyForPoint) {
+      points += 1;
+      pointsEl.textContent = points;
+      spin();
+    }
+  });
 });
