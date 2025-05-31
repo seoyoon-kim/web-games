@@ -1,11 +1,11 @@
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 
-const GRAVITY = 0.28; // 더 느리게
-const FLAP = -5.5; // 더 완화
+const GRAVITY = 0.28;
+const FLAP = -5.5;
 const PIPE_WIDTH = 50;
-const PIPE_GAP = 200; // 각 문의 넓이 더 넓게
-const PIPE_SPEED = 0.7; // 더 느리게
+const PIPE_GAP = 200;
+const PIPE_SPEED = 0.7;
 
 let bird = { x: 60, y: 200, width: 32, height: 32, velocity: 0 };
 let pipes = [];
@@ -35,13 +35,63 @@ function spawnPipe() {
   });
 }
 
-function drawBird() {
-  ctx.fillStyle = '#FFD700';
+function drawDogFace(x, y, w, h) {
+  // 얼굴
+  ctx.fillStyle = '#fffbe7';
   ctx.beginPath();
-  ctx.ellipse(bird.x, bird.y, bird.width/2, bird.height/2, 0, 0, Math.PI * 2);
+  ctx.ellipse(x, y, w/2, h/2, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = '#a67c52';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // 귀(왼쪽)
+  ctx.save();
+  ctx.translate(x - w/2 + 4, y - h/3);
+  ctx.rotate(-0.3);
+  ctx.fillStyle = '#a67c52';
+  ctx.beginPath();
+  ctx.ellipse(0, 0, w/5, h/3, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+  // 귀(오른쪽)
+  ctx.save();
+  ctx.translate(x + w/2 - 4, y - h/3);
+  ctx.rotate(0.3);
+  ctx.fillStyle = '#a67c52';
+  ctx.beginPath();
+  ctx.ellipse(0, 0, w/5, h/3, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  // 눈
+  ctx.fillStyle = '#333';
+  ctx.beginPath();
+  ctx.arc(x - w/6, y - h/10, w/14, 0, Math.PI * 2);
+  ctx.arc(x + w/6, y - h/10, w/14, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 코
+  ctx.fillStyle = '#a67c52';
+  ctx.beginPath();
+  ctx.ellipse(x, y + h/10, w/13, h/16, 0, 0, Math.PI * 2);
   ctx.fill();
   ctx.strokeStyle = '#333';
   ctx.stroke();
+
+  // 입
+  ctx.beginPath();
+  ctx.moveTo(x, y + h/8);
+  ctx.quadraticCurveTo(x, y + h/6, x - w/12, y + h/6);
+  ctx.moveTo(x, y + h/8);
+  ctx.quadraticCurveTo(x, y + h/6, x + w/12, y + h/6);
+  ctx.strokeStyle = '#333';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+}
+
+function drawBird() {
+  drawDogFace(bird.x, bird.y, bird.width, bird.height);
 }
 
 function drawPipes() {
