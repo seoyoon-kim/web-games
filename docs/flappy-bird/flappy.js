@@ -1,11 +1,11 @@
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 
-const GRAVITY = 0.4; // 기존 0.5에서 0.4로 감소
-const FLAP = -7; // 기존 -8에서 -7로 완화
+const GRAVITY = 0.28; // 더 느리게
+const FLAP = -5.5; // 더 완화
 const PIPE_WIDTH = 50;
-const PIPE_GAP = 160;
-const PIPE_SPEED = 1.2; // 기존 2에서 1.2로 느리게
+const PIPE_GAP = 200; // 각 문의 넓이 더 넓게
+const PIPE_SPEED = 0.7; // 더 느리게
 
 let bird = { x: 60, y: 200, width: 32, height: 32, velocity: 0 };
 let pipes = [];
