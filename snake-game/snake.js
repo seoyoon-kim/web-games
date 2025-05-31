@@ -33,7 +33,7 @@ function loop() {
   // Move snake
   let head = { ...snake[0] };
   if (direction === 'left') head.x -= grid;
-  if (direction === ' 'up') head.y -= grid;
+  if (direction === 'up') head.y -= grid;
   if (direction === 'right') head.x += grid;
   if (direction === 'down') head.y += grid;
 
