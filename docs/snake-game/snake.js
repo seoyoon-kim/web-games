@@ -3,16 +3,20 @@ const ctx = canvas.getContext('2d');
 
 const grid = 20;
 let count = 0;
-let snake = [{ x: 160, y: 200 }];
+let snake = [{ x: 200, y: 200 }]; // 중앙에서 시작
 let direction = 'right';
-let food = { x: 320, y: 200 };
+let food = getRandomPosition();
 let gameOver = false;
 
 function getRandomPosition() {
-  return {
-    x: Math.floor(Math.random() * (canvas.width / grid)) * grid,
-    y: Math.floor(Math.random() * (canvas.height / grid)) * grid
-  };
+  let position;
+  do {
+    position = {
+      x: Math.floor(Math.random() * (canvas.width / grid)) * grid,
+      y: Math.floor(Math.random() * (canvas.height / grid)) * grid
+    };
+  } while (snake.some(part => part.x === position.x && part.y === position.y));
+  return position;
 }
 
 document.addEventListener('keydown', e => {
@@ -25,7 +29,7 @@ document.addEventListener('keydown', e => {
 function loop() {
   if (gameOver) return;
   requestAnimationFrame(loop);
-  if (++count < 5) return;
+  if (++count < 8) return; // 속도 약간 느리게 조정
   count = 0;
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
